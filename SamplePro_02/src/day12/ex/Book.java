@@ -3,7 +3,7 @@ package day12.ex;
 public class Book implements Comparable<Book>{
 	
 	private String title;
-	private int price;
+	private Integer price;
 	
 	public Book() {
 		super();
@@ -50,7 +50,7 @@ public class Book implements Comparable<Book>{
 
 	@Override
 	public int compareTo(Book o) {
-		return (price+"").compareTo(o.price+"");
+		return (price).compareTo(o.price);
 	}
 	
 

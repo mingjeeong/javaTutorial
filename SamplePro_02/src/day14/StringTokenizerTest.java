@@ -7,9 +7,9 @@ public class StringTokenizerTest {
 	public static void main(String[] args) {
 
 		
-		String str = "독도는, 대한민국의, 아름다운,, 섬이다";
+		String str = "독도는        대한민국의      아름다       섬이다";
 
-		StringTokenizer st = new StringTokenizer(str, ",");
+		StringTokenizer st = new StringTokenizer(str, " ");
 		// System.out.println(st.nextToken());
 		// System.out.println(st.nextToken());
 		// System.out.println(st.nextToken());

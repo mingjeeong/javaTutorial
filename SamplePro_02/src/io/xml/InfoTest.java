@@ -153,7 +153,41 @@ class InfoTest implements ActionListener {
 	}
 
 	void removeData() {//추가
-		
+		try {
+			File file = new File("info.xml");
+			DocumentBuilderFactory docFac = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuild = docFac.newDocumentBuilder();
+			Document doc = docBuild.parse(file);//file-> 메모리구조(트리구조)로 변경
+			
+			NodeList personList = doc.getElementsByTagName("person");
+			
+			ta.setText("");
+			for (int i = 0; i < personList.getLength(); i++) {
+				Node temp = personList.item(i);
+				NodeList childList = temp.getChildNodes();
+				
+				for (int j = 0; j < childList.getLength(); j++) {
+					Node node = childList.item(j);
+					
+					//------------------------------search() 복사--후 추가
+					if(node.getNodeName().equals("tel")){
+						String searchTel = tf_tel.getText();
+						if(searchTel.equals(node.getTextContent())){
+							Node info = temp.getParentNode();
+							info.removeChild(temp);
+						}
+					}
+					
+					
+					
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println("삭제오류:"+e.getMessage());
+			e.printStackTrace();
+		} 
 		
 
 	}
@@ -173,7 +207,6 @@ class InfoTest implements ActionListener {
 			ta.setText("");
 			for (int i = 0; i < personList.getLength(); i++) {
 				Node temp = personList.item(i);
-				System.out.println(">>>"+temp);
 				NodeList childList = temp.getChildNodes();
 				
 				for (int j = 0; j < childList.getLength(); j++) {
@@ -225,7 +258,7 @@ class InfoTest implements ActionListener {
 			
 			//ta.setText(doc.getDocumentElement().getNodeName());//info출력
 			
-			NodeList personList = doc.getElementsByTagName("person");//person태그
+			NodeList personList = doc.getElementsByTagName("person");//person태그 가져오기
 			//ta.setText("인원수:"+personList.getLength());
 			
 			ta.setText("");

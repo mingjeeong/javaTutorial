@@ -8,13 +8,15 @@ public class BaseballGame {
 
 		boolean flag = true;
 		int num[] = new int[3];
-		for(int i=0;i<num.length;i++){
-			num[i]=(int) (Math.random()*10);
+		for (int i = 0; i < num.length; i++) {
+			num[i] = (int) (Math.random() * 10);
+
+			
 			System.out.println(num[i]);
 		}
-		while(flag){
+		while (flag) {
 			Scanner input = new Scanner(System.in);
-			
+
 		}
 	}
 

@@ -1,6 +1,7 @@
 package gui;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -14,9 +15,6 @@ public class Database {
 	public Database() throws Exception{
 		Class.forName(driver);//1.드라이버로딩
 		con = DriverManager.getConnection(url,user,pass);//2.연결객체 얻어오기
-		
-		
-		
 		
 	}
 	
@@ -41,6 +39,32 @@ public class Database {
 		ps.close();
 	}
 	
+	public ArrayList<InfoVO> selectAll() throws SQLException{
+		//3.sql문장
+		//String sql = "SELECT * FROM info_tab";
+		String sql = "SELECT name, jumin, tel, gender, age, nvl(home,'외국') home "//함수연산시 별칭 주어야함
+				+ "FROM info_tab";
+		//4.전송객체
+		PreparedStatement ps = con.prepareStatement(sql);//ps는 sql문을 먼저 가져간다
+		//5.전송
+		ResultSet rs = ps.executeQuery();
+		ArrayList<InfoVO> list = new ArrayList<>();
+		while(rs.next()){//레코드가 두개이상나오면 while문해야함
+			InfoVO vo = new InfoVO();
+			vo.setAge(rs.getInt("AGE"));
+			vo.setGender(rs.getString("GENDER"));
+			vo.setHome(rs.getString("HOME"));
+			vo.setId(rs.getString("JUMIN"));
+			vo.setName(rs.getString("NAME"));
+			vo.setTel(rs.getString("TEL"));
+			
+			list.add(vo);
+		}
+		rs.close();
+		ps.close();
+		return list;
+		
+	}
 	
 	public InfoVO selectByPk(String tel) throws SQLException{
 		InfoVO vo = new InfoVO();

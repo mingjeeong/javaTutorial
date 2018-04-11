@@ -34,7 +34,7 @@ public class ConTest3 {
 			
 			//5.전송
 			//st.executeUpdate(sql);
-			int result =st.executeUpdate();//sql 지정하면 안됨
+			int result = st.executeUpdate();//sql 지정하면 안됨
 			if(result == 1){
 				System.out.println("수정하였습니다.");
 			}

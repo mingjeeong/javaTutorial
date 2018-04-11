@@ -12,7 +12,7 @@ class InfoTest implements ActionListener{
 	
 	JFrame frame;
 	JTextField tf_name, tf_id, tf_tel, tf_age, tf_gender, tf_home ;
-	JButton b_add, b_show, b_search, b_delete, b_cancel, b_exit;
+	JButton b_add, b_update,b_show, b_search, b_delete, b_cancel, b_exit;
 	JTextArea ta;	
 	
 	Database db ;
@@ -21,7 +21,6 @@ class InfoTest implements ActionListener{
 		
 		frame		= new JFrame("DBTest");
 		
-		
 		tf_name		= new JTextField(15);
 		tf_id		= new JTextField(15);
 		tf_tel		= new JTextField(15);
@@ -29,7 +28,6 @@ class InfoTest implements ActionListener{
 		tf_gender	= new JTextField(15);
 		tf_home		= new JTextField(15);
 		
-
 		b_add		= new JButton("Add", new ImageIcon("src/gui/img/add.gif"));
 		b_add.setVerticalTextPosition(SwingConstants.BOTTOM);
 		b_add.setHorizontalTextPosition(SwingConstants.CENTER);		
@@ -37,7 +35,8 @@ class InfoTest implements ActionListener{
 		b_add.setToolTipText("입력합니다");
 		
 		
-		b_show		= new JButton("Update");
+		b_update	= new JButton("Update");
+		b_show 		= new JButton("Show");
 		b_search	= new JButton("Search");
 		b_delete	= new JButton("Delete");
 		b_cancel	= new JButton("Cancel");
@@ -87,6 +86,7 @@ class InfoTest implements ActionListener{
 
 		p_south.setLayout( new GridLayout(1,6));
 		p_south.add( b_add );
+		p_south.add( b_update );
 		p_south.add( b_show );
 		p_south.add( b_search );
 		p_south.add( b_delete );
@@ -107,8 +107,9 @@ class InfoTest implements ActionListener{
 	public void eventProc(){
 
 		b_add.addActionListener( this );
-		b_show.addActionListener( this );
+		b_update.addActionListener( this );
 		b_search.addActionListener( this );
+		b_show.addActionListener( this );
 		b_delete.addActionListener( this );
 		b_cancel.addActionListener( this );
 		b_exit.addActionListener( this );
@@ -127,10 +128,12 @@ class InfoTest implements ActionListener{
 			insert();
 		} else if (evt == tf_tel || evt == b_search) {
 			selectTel(tf_tel.getText());
-		} else if (evt == b_show) {
+		} else if (evt == b_update) {
 			update();
 		} else if (evt == b_delete) {
 			delete(tf_tel.getText());
+		}else if(evt == b_show){
+			selectAll();
 		}
 
 	}
@@ -195,6 +198,25 @@ class InfoTest implements ActionListener{
 			ta.setText("삭제완료");
 		} catch (SQLException e) {
 			System.out.println("삭제실패" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public void selectAll(){
+		try {
+			ArrayList<InfoVO> list = db.selectAll();
+			ta.setText("검색결과\n");
+			for(InfoVO vo : list){
+				ta.append(vo.getName() +"\t");
+				ta.append(vo.getId() +"\t");
+				ta.append(vo.getTel() +"\t");
+				ta.append(vo.getGender() +"\t");
+				ta.append(vo.getAge() +"\t");
+				ta.append(vo.getHome() +"\t");
+				ta.append("\n");
+			}
+		} catch (SQLException e) {
+			System.out.println("전체검색 실패: "+e.getMessage());
 			e.printStackTrace();
 		}
 	}

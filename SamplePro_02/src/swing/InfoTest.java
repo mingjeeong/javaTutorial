@@ -24,6 +24,8 @@ class Info {
 	JButton bDelete;
 	JButton bShow;
 	JButton bExit;
+	
+	
 
 	//2. 생성자 함수(모든 객체 생성)
 	Info(){
